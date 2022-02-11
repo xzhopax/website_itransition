@@ -1,0 +1,15 @@
+<div th:fragment="header">
+  <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+      <a class="alert alert-info mt-2" href="/">Главная</a>
+      <a class="alert alert-info mt-2" href="/users/add">Добавить пользователя</a>
+      <form class="alert alert-info mt-2"  method="post">
+        <a class="alert-info" href="/users/deleteall" >Удалить ВСЕХ пользователей</a>
+      </form>
+      <a class="alert alert-info mt-2" href="/oops">Заблокировать ВСЕХ пользователей</a>
+      <form class="mt-0" th:action="@{/logout}" method="post">
+        <input class="alert alert-info mt-2" type="submit" value="Log Out">
+      </form>
+    </nav>
+  </div>
+</div>
