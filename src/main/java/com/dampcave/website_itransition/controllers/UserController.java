@@ -1,8 +1,8 @@
 package com.dampcave.website_itransition.controllers;
 
 
-import com.dampcave.website_itransition.models.User;
-import com.dampcave.website_itransition.repositoryes.UserRepository;
+import com.dampcave.website_itransition.models.People;
+import com.dampcave.website_itransition.repositoryes.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,75 +15,73 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private PeopleRepository peopleRepository;
 
-    @GetMapping("/users")
+    @GetMapping("/index")
     public String allUsers(Model model){
-        Iterable<User> users = userRepository.findAll();
-        model.addAttribute("users", users);
-        return "users";
+        Iterable<People> peoples = peopleRepository.findAll();
+        model.addAttribute("peoples", peoples);
+        return "index";
     }
 
 
 
-    @GetMapping("/users/add")
-    public String usersAdd(Model model){
-        return "users-add";
-    }
-
-    @PostMapping("/users/add")
-    public String newUserAdd(@RequestParam String name, @RequestParam String email,
-                             @RequestParam String login, @RequestParam String password, Model model){
-        User user = new User(name, email, login, password);
-        userRepository.save(user);
-
-        return "redirect:/users";
-    }
+//    @GetMapping("/users/add")
+//    public String usersAdd(Model model){
+//        return "users-add";
+//    }
+//
+//    @PostMapping("/users/add")
+//    public String newUserAdd(@RequestParam String name, @RequestParam String email,
+//                             @RequestParam String login, @RequestParam String password, Model model){
+//        People people = new People(name, email);
+//        peopleRepository.save(people);
+//
+//        return "redirect:/users";
+//    }
 
     @GetMapping("/users/{id}")
-    public String userDetails(@PathVariable(value = "id") int id, Model model){
-        if (!userRepository.existsById(id)){
+    public String userDetails(@PathVariable(value = "id") Long id, Model model){
+        if (!peopleRepository.existsById(id)){
             return "redirect:/user";
         }
-        Optional<User> user = userRepository.findById(id);
-        ArrayList<User> res = new ArrayList<>();
+        Optional<People> user = peopleRepository.findById(id);
+        ArrayList<People> res = new ArrayList<>();
         user.ifPresent(res::add);
         model.addAttribute("user", res);
         return "users-details";
     }
 
     @GetMapping("/users/{id}/update")
-    public String userGetUpdate(@PathVariable(value = "id") int id, Model model){
-        if (!userRepository.existsById(id)){
+    public String userGetUpdate(@PathVariable(value = "id") Long id, Model model){
+        if (!peopleRepository.existsById(id)){
             return "redirect:/users";
         }
-        Optional<User> user = userRepository.findById(id);
-        ArrayList<User> res = new ArrayList<>();
+        Optional<People> user = peopleRepository.findById(id);
+        ArrayList<People> res = new ArrayList<>();
         user.ifPresent(res::add);
         model.addAttribute("user", res);
         return "users-update";
     }
 
     @PostMapping("/users/{id}/update")
-    public String userUpdate(@PathVariable(value = "id") int id, @RequestParam String name,
+    public String userUpdate(@PathVariable(value = "id") Long id, @RequestParam String name,
                                  @RequestParam String email,Model model){
-        User user = userRepository.findById(id).orElseThrow();
-        user.setName(name);
-        user.setEmail(email);
-        userRepository.save(user);
+        People people = peopleRepository.findById(id).orElseThrow();
+        peopleRepository.save(people);
         return "redirect:/users";
     }
 
     @PostMapping("/users/{id}/delete")
-    public String deleteUser(@PathVariable(value = "id") int id,Model model){
-        User post = userRepository.findById(id).orElseThrow();
-        userRepository.delete(post);
-        return "redirect:/users";
+    public String deleteUser(@PathVariable(value = "id") Long id,Model model){
+        People post = peopleRepository.findById(id).orElseThrow();
+        peopleRepository.delete(post);
+        return "redirect:/index";
     }
 
     @PostMapping("/users/deleteall")
     public String deleteAllUsers(){
-        userRepository.deleteAll();
-        return "redirect:/users";
+        peopleRepository.deleteAll();
+        return "redirect:/index";
     }
 }

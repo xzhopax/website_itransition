@@ -566,7 +566,7 @@ ipshared
 /website/var/versions/asset/*
 /website/var/versions/document/*
 /website/var/versions/object/*
-/website/var/user-image/*
+/website/var/people-image/*
 
 # Magento2
 /sitemap
@@ -882,7 +882,7 @@ Mercury/
 /plugins/fields/text/*
 /plugins/fields/textarea/*
 /plugins/fields/url/*
-/plugins/fields/user/*
+/plugins/fields/people/*
 /plugins/fields/usergrouplist/*
 /plugins/finder/categories/*
 /plugins/finder/contacts/*
@@ -897,7 +897,7 @@ Mercury/
 /plugins/privacy/contact/*
 /plugins/privacy/content/*
 /plugins/privacy/message/*
-/plugins/privacy/user/*
+/plugins/privacy/people/*
 /plugins/quickicon/extensionupdate/*
 /plugins/quickicon/joomlaupdate/*
 /plugins/quickicon/phpversioncheck/*
@@ -929,11 +929,11 @@ Mercury/
 /plugins/system/updatenotification/*
 /plugins/twofactorauth/totp/*
 /plugins/twofactorauth/yubikey/*
-/plugins/user/contactcreator/*
-/plugins/user/example/*
-/plugins/user/joomla/*
-/plugins/user/profile/*
-/plugins/user/terms/*
+/plugins/people/contactcreator/*
+/plugins/people/example/*
+/plugins/people/joomla/*
+/plugins/people/profile/*
+/plugins/people/terms/*
 /templates/beez3/*
 /templates/protostar/*
 /templates/system/*
