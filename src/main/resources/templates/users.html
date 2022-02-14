@@ -95,6 +95,7 @@
         <th>Registration</th><!-- head table -->
         <th>lastlogin</th><!-- head table -->
         <th>Status</th><!-- head table -->
+        <th>Enabled</th><!-- head table -->
     </tr>
     </thead>
     <tbody class="alert alert-info mt-2">
@@ -109,6 +110,7 @@
             <td><p th:text="${el.password}"/></td> <!-- cell table -->
             <td><p th:text="${el.registration}"/></td> <!-- cell table -->
             <td><p th:text="${el.lastLogin}"/></td> <!-- cell table -->
+            <td><p th:text="${el.status}"/></td> <!-- cell table -->
             <td><p th:text="${el.status}"/></td> <!-- cell table -->
             <td>
                 <form th:action="'/users/' + ${el.id} +'/delete' " method="post" >

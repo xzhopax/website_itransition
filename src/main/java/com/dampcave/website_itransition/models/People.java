@@ -9,7 +9,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "peoples")
-@Data
 //@NoArgsConstructor
 public class People {
 
@@ -30,25 +29,60 @@ public class People {
     @Column(name = "lastlogin")
     private Date lastLogin;
 
-    @Column(name = "status")
-    private String status;
-
     @OneToOne(cascade = CascadeType.ALL,
             orphanRemoval = true)
     private User user;
 
     public People() {
         this.registration = new Date();
-        this.status = "Unblocked";
     }
 
+    public Long getId() {
+        return id;
+    }
 
-    public People(String name, String email) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
-        this.registration = new Date();
-        this.status = "Unblocked";
+    }
+
+    public Date getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Date registration) {
+        this.registration = registration;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

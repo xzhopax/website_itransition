@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,6 +24,8 @@ public class UserController {
         model.addAttribute("peoples", peoples);
         return "index";
     }
+
+
 
 
 
@@ -52,25 +55,25 @@ public class UserController {
         return "users-details";
     }
 
-    @GetMapping("/users/{id}/update")
-    public String userGetUpdate(@PathVariable(value = "id") Long id, Model model){
-        if (!peopleRepository.existsById(id)){
-            return "redirect:/users";
-        }
-        Optional<People> user = peopleRepository.findById(id);
-        ArrayList<People> res = new ArrayList<>();
-        user.ifPresent(res::add);
-        model.addAttribute("user", res);
-        return "users-update";
-    }
-
-    @PostMapping("/users/{id}/update")
-    public String userUpdate(@PathVariable(value = "id") Long id, @RequestParam String name,
-                                 @RequestParam String email,Model model){
-        People people = peopleRepository.findById(id).orElseThrow();
-        peopleRepository.save(people);
-        return "redirect:/users";
-    }
+//    @GetMapping("/users/{id}/update")
+//    public String userGetUpdate(@PathVariable(value = "id") Long id, Model model){
+//        if (!peopleRepository.existsById(id)){
+//            return "redirect:/users";
+//        }
+//        Optional<People> user = peopleRepository.findById(id);
+//        ArrayList<People> res = new ArrayList<>();
+//        user.ifPresent(res::add);
+//        model.addAttribute("user", res);
+//        return "users-update";
+//    }
+//
+//    @PostMapping("/users/{id}/update")
+//    public String userUpdate(@PathVariable(value = "id") Long id, @RequestParam String name,
+//                                 @RequestParam String email,Model model){
+//        People people = peopleRepository.findById(id).orElseThrow();
+//        peopleRepository.save(people);
+//        return "redirect:/users";
+//    }
 
     @PostMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable(value = "id") Long id,Model model){
@@ -83,5 +86,17 @@ public class UserController {
     public String deleteAllUsers(){
         peopleRepository.deleteAll();
         return "redirect:/index";
+    }
+
+    @PostMapping("/users/blocked")
+    public String userBlockedAll(){
+        List<People> users = peopleRepository.findAll();
+        List<People> blockedUsers = new ArrayList<>();
+        for (People people : users){
+            people.getUser().setEnabled(false);
+            blockedUsers.add(people);
+        }
+        peopleRepository.saveAll(blockedUsers);
+        return "login";
     }
 }

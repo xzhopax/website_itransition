@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserAuthService implements UserDetailsService {
@@ -23,11 +24,15 @@ public class UserAuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(user -> new User(
-                        user.getUsername(),
-                        user.getPassword(),
-                        Collections.singletonList(new SimpleGrantedAuthority("USER"))
-                )).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Optional<com.dampcave.website_itransition.models.User> myUser = userRepository.findByUsername(username);
+        if (myUser.get().getEnabled()) {
+            return userRepository.findByUsername(username)
+                    .map(user -> new User(
+                            user.getUsername(),
+                            user.getPassword(),
+                            Collections.singletonList(new SimpleGrantedAuthority("USER"))
+                    )).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        } else
+            throw new UsernameNotFoundException("User blocked");
     }
 }

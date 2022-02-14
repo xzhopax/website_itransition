@@ -93,25 +93,23 @@
     <th>Name</th><!-- head table -->
     <th>Email</th><!-- head table -->
     <th>Login</th><!-- head table -->
-    <th>Password</th><!-- head table -->
     <th>Registration</th><!-- head table -->
-    <th>lastlogin</th><!-- head table -->
-    <th>Status</th><!-- head table -->
+    <th>Last Login</th><!-- head table -->
+    <th>Blocked</th><!-- head table -->
   </tr>
   </thead>
   <tbody class="alert alert-info mt-2">
 
-  <div th:each="el: ${peoples}" >
+  <div th:each="el:${peoples}" >
     <tr><!-- line table  -->
       <td style="text-align:center;"><input type="checkbox" th:value="${el.id}"></td>
       <td><p th:text="${el.id}"/></td> <!-- cell table -->
       <td><p th:text="${el.name}"/></td> <!-- cell table -->
       <td><p th:text="${el.email}"/></td> <!-- cell table -->
       <td><p th:text="${el.user.username}"/></td> <!-- cell table -->
-      <td><p th:text="${el.user.password}"/></td> <!-- cell table -->
       <td><p th:text="${el.registration}"/></td> <!-- cell table -->
       <td><p th:text="${el.lastLogin}"/></td> <!-- cell table -->
-      <td><p th:text="${el.status}"/></td> <!-- cell table -->
+      <td><p th:text="${el.user.enabled}"/></td> <!-- cell table -->
       <td>
         <form th:action="'/users/' + ${el.id} +'/delete' " method="post" >
           <button class="btn btn-outline-danger" type="submit">Удалить</button>

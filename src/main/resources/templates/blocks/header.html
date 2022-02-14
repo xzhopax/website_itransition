@@ -13,10 +13,12 @@
             <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/">Главная</a>
             <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/register">Добавить пользователя</a>
             <form class="form-inline my-2 my-lg-0" method="post">
-                <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/users/deleteall">Удалить ВСЕХ пользователей</a>
+                <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/users/deleteall">Удалить ВСЕХ
+                    пользователей</a>
             </form>
             <div class="form-inline my-2 my-lg-0">
-                <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/oops">Заблокировать ВСЕХ пользователей</a>
+                <a class="btn btn-outline-success my-2 mr-2 my-sm-0"  method="post"
+                   href="/users/blocked">Заблокировать ВСЕХ пользователей</a>
             </div>
             <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
                 <button class="btn btn-outline-success my-2 my-sm-0">Выйти</button>

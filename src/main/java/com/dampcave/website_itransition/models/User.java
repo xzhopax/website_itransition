@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-@Data
 public class User {
 
     @Id
@@ -20,8 +19,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(columnDefinition = "TINYINT")
-    private Short enabled;
+    @Column()
+    private Boolean enabled;
 
     @OneToOne(
             mappedBy = "user",
@@ -31,7 +30,46 @@ public class User {
     private People people;
 
     public User() {
+        this.enabled = true;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public People getPeople() {
+        return people;
+    }
+
+    public void setPeople(People people) {
+        this.people = people;
+    }
 }
