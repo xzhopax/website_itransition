@@ -3,6 +3,7 @@ package com.dampcave.website_itransition.controllers;
 
 import com.dampcave.website_itransition.models.People;
 import com.dampcave.website_itransition.repositoryes.PeopleRepository;
+import com.dampcave.website_itransition.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,88 +16,66 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
-    @Autowired
+
     private PeopleRepository peopleRepository;
+
+    private UserAuthService userAuthService;
+
+    @Autowired
+    public UserController(PeopleRepository peopleRepository, UserAuthService userAuthService) {
+        this.peopleRepository = peopleRepository;
+        this.userAuthService = userAuthService;
+    }
 
     @GetMapping("/index")
     public String allUsers(Model model){
+        model.addAttribute("title", "All Users");
         Iterable<People> peoples = peopleRepository.findAll();
         model.addAttribute("peoples", peoples);
         return "index";
     }
 
-
-
-
-
-//    @GetMapping("/users/add")
-//    public String usersAdd(Model model){
-//        return "users-add";
-//    }
-//
-//    @PostMapping("/users/add")
-//    public String newUserAdd(@RequestParam String name, @RequestParam String email,
-//                             @RequestParam String login, @RequestParam String password, Model model){
-//        People people = new People(name, email);
-//        peopleRepository.save(people);
-//
-//        return "redirect:/users";
-//    }
-
-    @GetMapping("/users/{id}")
-    public String userDetails(@PathVariable(value = "id") Long id, Model model){
-        if (!peopleRepository.existsById(id)){
-            return "redirect:/user";
-        }
-        Optional<People> user = peopleRepository.findById(id);
-        ArrayList<People> res = new ArrayList<>();
-        user.ifPresent(res::add);
-        model.addAttribute("user", res);
-        return "users-details";
-    }
-
-//    @GetMapping("/users/{id}/update")
-//    public String userGetUpdate(@PathVariable(value = "id") Long id, Model model){
-//        if (!peopleRepository.existsById(id)){
-//            return "redirect:/users";
-//        }
-//        Optional<People> user = peopleRepository.findById(id);
-//        ArrayList<People> res = new ArrayList<>();
-//        user.ifPresent(res::add);
-//        model.addAttribute("user", res);
-//        return "users-update";
-//    }
-//
-//    @PostMapping("/users/{id}/update")
-//    public String userUpdate(@PathVariable(value = "id") Long id, @RequestParam String name,
-//                                 @RequestParam String email,Model model){
-//        People people = peopleRepository.findById(id).orElseThrow();
-//        peopleRepository.save(people);
-//        return "redirect:/users";
-//    }
-
     @PostMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable(value = "id") Long id,Model model){
-        People post = peopleRepository.findById(id).orElseThrow();
-        peopleRepository.delete(post);
+        People people = peopleRepository.findById(id).orElseThrow();
+        peopleRepository.delete(people);
         return "redirect:/index";
     }
 
-    @PostMapping("/users/deleteall")
+    @GetMapping("/users/deleteall")
     public String deleteAllUsers(){
         peopleRepository.deleteAll();
         return "redirect:/index";
     }
 
-    @PostMapping("/users/blocked")
+    @GetMapping("/users/blocked")
     public String userBlockedAll(){
         List<People> users = peopleRepository.findAll();
-        List<People> blockedUsers = new ArrayList<>();
         for (People people : users){
-            people.getUser().setEnabled(false);
-            blockedUsers.add(people);
+            people.getUser().setAccountNonLocked(false);
+            peopleRepository.save(people);
         }
-        peopleRepository.saveAll(blockedUsers);
-        return "login";
+        return "redirect:/index";
     }
+
+    @GetMapping("/users/unblocked")
+    public String userUnblockedAll(){
+        List<People> users = peopleRepository.findAll();
+        for (People people : users){
+            people.getUser().setAccountNonLocked(true);
+            peopleRepository.save(people);
+        }
+        return "redirect:/index";
+    }
+
+
+    @GetMapping("/users/unblocked/{id}")
+    public String userIsAccountNonLocked(@PathVariable(value = "id") Long id,Model model){
+        People people = peopleRepository.findById(id).orElseThrow();
+        people.getUser().setAccountNonLocked(!people.getUser().isAccountNonLocked());
+
+        peopleRepository.save(people);
+        return "redirect:/index";
+    }
+
 }

@@ -25,25 +25,32 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginUser( Model model) {
-        model.addAttribute("title", "Вход");
+        model.addAttribute("title", "Login");
         return "login";
+    }
+
+    @GetMapping("/test")
+    public String testUser( Model model) {
+        model.addAttribute("title", "Test");
+        return "test";
     }
 
 
     @GetMapping("/")
     public String home( Model model) {
-        model.addAttribute("title", "Главная страница");
+        model.addAttribute("title", "Main");
         return "home";
     }
 
     @GetMapping("/oops")
     public String oops( Model model) {
-        model.addAttribute("title", "don't worry");
+        model.addAttribute("title", "Don't worry");
         return "dont-worry";
     }
 
     @GetMapping("/register")
     public String registrationUserGet(Model model){
+        model.addAttribute("title", "Registration");
         UserRegistrationRepr userRegistrationRepr = new UserRegistrationRepr();
         model.addAttribute("user", userRegistrationRepr);
         model.addAttribute("people", userRegistrationRepr);

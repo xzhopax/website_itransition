@@ -22,7 +22,6 @@ public class People {
     @Column(name = "email")
     private String email;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "registration")
     private Date registration;
 

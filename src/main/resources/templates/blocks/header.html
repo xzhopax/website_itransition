@@ -1,29 +1,39 @@
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">WebSite</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            </ul>
-            <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/">Главная</a>
-            <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/register">Добавить пользователя</a>
-            <form class="form-inline my-2 my-lg-0" method="post">
-                <a class="btn btn-outline-success my-2 mr-2 my-sm-0" href="/users/deleteall">Удалить ВСЕХ
-                    пользователей</a>
-            </form>
-            <div class="form-inline my-2 my-lg-0">
-                <a class="btn btn-outline-success my-2 mr-2 my-sm-0"  method="post"
-                   href="/users/blocked">Заблокировать ВСЕХ пользователей</a>
+            <a class="navbar-brand" href="/" th:text="${title}"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto ml-5">
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="/index">Show All Users </a>
+                    </li>
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="/register">Create User </a>
+                    </li>
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="/users/deleteall">Delete all users </a>
+                    </li>
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="/users/unblocked">Unblock all users </a>
+                    </li>
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="/users/blocked">Block all users </a>
+                    </li>
+                    <li class="nav-item ml-5">
+                        <form class="nav-item" th:action="@{/logout}" method="post">
+                            <button class="btn btn-dark">Exit</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
-            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
-                <button class="btn btn-outline-success my-2 my-sm-0">Выйти</button>
-            </form>
-        </div>
+
     </nav>
+
 </div>
 
