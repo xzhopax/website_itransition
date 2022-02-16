@@ -32,6 +32,7 @@ public class User implements UserDetails {
     @Column(columnDefinition = "TINYINT")
     private boolean enabled;
 
+
     @OneToOne(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -45,7 +46,6 @@ public class User implements UserDetails {
         this.credentialsNonExpired = true;
         this.enabled = true;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

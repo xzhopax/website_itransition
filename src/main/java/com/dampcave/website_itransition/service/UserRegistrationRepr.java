@@ -23,8 +23,4 @@ public class UserRegistrationRepr {
 
     @NotBlank
     private String email;
-
-
-
-
 }

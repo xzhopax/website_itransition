@@ -24,9 +24,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
-
-
     public void create(UserRegistrationRepr userRegistrationRepr){
         User user = new User();
         People people = new People();
@@ -36,7 +33,5 @@ public class UserService {
         people.setEmail(userRegistrationRepr.getEmail());
         people.setUser(user);
         peopleRepository.save(people);
-//        userRepository.save(user);
-
     }
 }

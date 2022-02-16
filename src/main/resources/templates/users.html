@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <links-header th:insert="blocks/links-header :: links-header"></links-header>
+</head>
+<!--<body bgcolor="#000" background="star-sky.jpeg">-->
+<body>
+
+    <header th:insert="blocks/header :: header"></header>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        ((function ($) {
+            $.fn.checkboxTable = function () {
+                target = this;
+
+                // click on checkbox in head table.
+                $(target).on('click', 'thead :checkbox', function () {
+                    var check = this;
+                    $(this).parents('table').find('tbody :checkbox').each(function () {
+                        if ($(check).is(':checked')) {
+                            $(this).prop('checked', true);
+                            $(this).parents('tr').addClass('selected');
+                        } else {
+                            $(this).prop('checked', false);
+                            $(this).parents('tr').removeClass('selected');
+                        }
+                    });
+                });
+
+                // click on checkbox in line table.
+                $(target).on('click', 'tbody :checkbox', function () {
+                    var parents = $(this).parents('table');
+                    if ($(this).is(':checked')) {
+                        $(this).parents('tr').addClass('selected');
+                        $(parents).find('thead :checkbox').prop('checked', true);
+                    } else {
+                        $(this).parents('tr').removeClass('selected');
+                        if ($(parents).find('tbody :checkbox:checked').length == 0) {
+                            $(parents).find('thead :checkbox').prop('checked', false);
+                        }
+                    }
+                });
+
+                // click on line table
+                $(target).on('click', 'tbody tr', function (event) {
+                    if (event.target.tagName == 'TH' || event.target.tagName == 'TD') {
+                        $(this).find(':checkbox').trigger('click');
+                    }
+                });
+            };
+        })(jQuery));
+    </script>
+
+    <div class="btn-group mt-5 ml-3 " role="group" aria-label="Button group with nested dropdown">
+        <form th:action="'/users/deleteall' " method="post">
+            <button class="btn btn-dark ml-1" type="submit">Delete All</button>
+        </form>
+
+        <form th:action="'/usersblock' " method="get">
+            <button class="btn btn-dark ml-1" type="submit">Blocked</button>
+        </form>
+
+        <div class="btn-group ml-1" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Dropdown
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="/usersblock">Block</a>
+                <a class="dropdown-item" href="#">Block</a>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="ml-5 mt-2">Show all Users</h2>
+
+<form th:name="isCheckedTable">
+    <table class="table table-bordered ml-3">
+        <thead>
+            <tr><!-- line table -->
+                <th class="btn-check"><input th:name="allCheckbox"  type="checkbox"></th><!-- head table -->
+                <th>Id</th><!-- head table -->
+                <th>Name</th><!-- head table -->
+                <th>Email</th><!-- head table -->
+                <th>Login</th><!-- head table -->
+                <th>Registration</th><!-- head table -->
+                <th>Last Login</th><!-- head table -->
+                <th>Unblocked</th><!-- head table -->
+            </tr>
+        </thead>
+
+        <tbody>
+            <div th:each="el:${peoples}">
+                <tr><!-- line table  -->
+
+                    <td class="btn-check"><input th:type="checkbox" th:id="isChecked"  th:value="${el.id}"></td>
+                    <td><p th:text="${el.id}"/></td> <!-- cell table -->
+                    <td><p th:text="${el.name}"/></td> <!-- cell table -->
+                    <td><p th:text="${el.email}"/></td> <!-- cell table -->
+                    <td><p th:text="${el.user.username}"/></td> <!-- cell table -->
+                    <td><p th:text="${el.registration}"/></td> <!-- cell table -->
+                    <td><p th:text="${el.lastLogin}"/></td> <!-- cell table -->
+                    <td><p th:text="${el.user.isAccountNonLocked()}"/></td> <!-- cell table -->
+                    <td>
+                        <form th:action="'/users/' + ${el.id} +'/delete' " method="post">
+                            <button class="btn btn-secondary" type="submit">Delete</button>
+                        </form>
+                        <br>
+                        <form th:action="'/users/unblocked/' + ${el.id} " method="get">
+                            <button class="btn btn-secondary" type="submit">Unblocked/Blocked</button>
+                        </form>
+                    </td>
+                </tr>
+            </div>
+        </tbody>
+    </table>
+</form>
+
+    <script>
+        $('.table').checkboxTable();
+    </script>
+    <br>
+    <input class="btn btn-dark ml-3" type="button" value="Add New User" onclick="window.location.href = 'register'">
+
+
+
+    <footer th:insert="blocks/footer :: footer"></footer>
+
+</body>
+</html>

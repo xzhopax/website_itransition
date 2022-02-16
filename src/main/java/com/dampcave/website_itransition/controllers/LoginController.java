@@ -1,6 +1,5 @@
 package com.dampcave.website_itransition.controllers;
 
-import com.dampcave.website_itransition.models.People;
 import com.dampcave.website_itransition.service.UserRegistrationRepr;
 import com.dampcave.website_itransition.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
 @Controller
 public class LoginController {
-    private final UserService userService;
 
+    private final UserService userService;
 
     @Autowired
     public LoginController(UserService userService) {
@@ -30,11 +28,10 @@ public class LoginController {
     }
 
     @GetMapping("/test")
-    public String testUser( Model model) {
-        model.addAttribute("title", "Test");
+    public String test( Model model) {
+        model.addAttribute("title", "Login");
         return "test";
     }
-
 
     @GetMapping("/")
     public String home( Model model) {
@@ -72,8 +69,5 @@ public class LoginController {
         userService.create(userRegistrationRepr);
         return "redirect:/login";
     }
-
-
-
 
 }
