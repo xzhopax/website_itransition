@@ -61,6 +61,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(passwordEncoder);
         return authenticationProvider;
     }
-
-
 }

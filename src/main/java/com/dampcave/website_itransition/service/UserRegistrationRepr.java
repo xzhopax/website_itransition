@@ -1,7 +1,6 @@
 package com.dampcave.website_itransition.service;
 
 import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 
 @Data

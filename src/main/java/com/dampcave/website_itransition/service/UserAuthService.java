@@ -18,7 +18,6 @@ import java.util.Optional;
 public class UserAuthService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
     private final PeopleRepository peopleRepository;
 
     @Autowired
@@ -30,7 +29,7 @@ public class UserAuthService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<com.dampcave.website_itransition.models.User> myUser = userRepository.findByUsername(username);
-        if (myUser.get().isAccountNonLocked()) {
+        if (myUser.get().isActive()) {
             myUser.get().getPeople().setLastLogin(new Date());
             peopleRepository.save(myUser.get().getPeople());
             return userRepository.findByUsername(username)
@@ -39,10 +38,7 @@ public class UserAuthService implements UserDetailsService {
                             user.getPassword(),
                             Collections.singletonList(new SimpleGrantedAuthority("USER"))
                     )).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
         } else
             throw new UsernameNotFoundException("User blocked");
     }
-
-
 }
